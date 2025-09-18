@@ -24,11 +24,29 @@ connectDB();
 
 // Security middleware
 app.use(helmet());
-app.use(cors({
-    origin: 'https://chat-bot-kappa-tawny.vercel.app',
-    credentials: true
-}));
+// app.use(cors({
+//     origin: 'https://chat-bot-kappa-tawny.vercel.app',
+//     credentials: true
+// }));
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || 'http://localhost:3000')
+    .split(',')
+    .map(o => o.trim())
+    .filter(Boolean);
 
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow non-browser requests or same-origin (no Origin header)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 // Rate limiting
 const limiter = rateLimit({
     windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 15 * 60 * 1000),
