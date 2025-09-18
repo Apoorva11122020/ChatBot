@@ -28,7 +28,7 @@ app.use(helmet());
 //     origin: 'https://chat-bot-kappa-tawny.vercel.app',
 //     credentials: true
 // }));
-const allowedOrigins = 'https://chatbot-frontend-8s5i.onrender.com,http://localhost:5173,http://localhost:3000'
+const allowedOrigins = 'https://chatbot-frontend-8s5i.onrender.com'
     .split(',')
     .map(o => o.trim())
     .filter(Boolean);
