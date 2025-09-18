@@ -25,7 +25,7 @@ connectDB();
 // Security middleware
 app.use(helmet());
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: 'https://chat-bot-kappa-tawny.vercel.app',
     credentials: true
 }));
 
