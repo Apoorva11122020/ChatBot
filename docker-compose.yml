@@ -1,31 +1,3 @@
-﻿# services:
-#   server:
-#     build: ./server
-#     ports:
-#       - "5000:5000"
-#     env_file:
-#       - ./server/.env
-#     environment:
-#       - NODE_ENV=production
-#     depends_on: []
-#     networks:
-#       - appnet
-
-#   client:
-#     build: ./client
-#     ports:
-#       - "3000:80"
-#     environment:
-#       - VITE_API_URL=http://localhost:5000/api
-#     depends_on:
-#       - server
-#     networks:
-#       - appnet
-
-# networks:
-#   appnet:
-#     driver: bridge
-
 version: "3.9"
 
 services:
@@ -39,17 +11,20 @@ services:
       - ./server/.env.production
     environment:
       - NODE_ENV=production
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
     restart: unless-stopped
     networks:
       - appnet
 
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://localhost:5000/api
     container_name: ai-support-client
     ports:
       - "3000:80"
-    # Note: Vite reads env at build time. Ensure client/.env.production has VITE_API_URL
-    # environment here does not affect already-built static files
+    # Note: Vite reads env at build time. Ensure client/.env.production has VITE_API_URL if building there
     depends_on:
       - server
     restart: unless-stopped
