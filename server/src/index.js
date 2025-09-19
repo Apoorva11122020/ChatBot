@@ -65,6 +65,20 @@ app.use(morgan('combined'));
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 
+app.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'AI Customer Support API is running',
+        version: '1.0.0',
+        endpoints: {
+            health: '/api/health',
+            auth: '/api/auth',
+            chat: '/api/chat'
+        },
+        timestamp: new Date().toISOString()
+    });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.status(200).json({
