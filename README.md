@@ -1,6 +1,6 @@
 ﻿# AI Customer Support – Full Stack
 
-A minimal AI-powered customer support chat app with JWT auth, chat history, and OpenRouter/Hugging Face integration.
+A minimal AI-powered customer support chat app with JWT auth, chat history, and OpenRouter integration.
 
 ## Features
 
