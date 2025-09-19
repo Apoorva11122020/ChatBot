@@ -65,6 +65,9 @@ app.use(morgan('combined'));
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 
+app.use('/auth', authRoutes);
+app.use('/chat', chatRoutes);
+
 app.get('/', (req, res) => {
     res.status(200).json({
         status: 'OK',
